@@ -2,16 +2,6 @@
 from django.contrib.gis.db import models
 # Create your models here.
 
-class Location(models.Model):
-	name = models.CharField(max_length=255)
-	point = models.PointField(help_text='Represented as (lan, lat)')
-	objects = models.GeoManager()
-
-class Region(models.Model):
-	name = models.CharField(max_length=255)
-	area = models.PolygonField()
-	objects = models.GeoManager()
-
 class Paths(models.Model):
 	path = models.LineStringField(srid=4269)
 	badge = models.CharField(max_length=255)

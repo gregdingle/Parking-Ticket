@@ -1,14 +1,23 @@
 To run the app follow the steps bellow:
 
-1. Install Postgresql-9.1
-    sudo apt-get install postgresql-9.1
-2. Install postgis-2.0.1
-    sudo apt-get install postgresql-9.1-postgis
+1. sudo apt-get install postgresql-9.1 pgadmin3
 
-3. Run legacy_gist.sql.in file
+2. sudo apt-get install postgresql-server-dev-9.1
 
-4. Run the requirement.txt file
+3. sudo apt-get install postgresql-contrib-9.1
 
-5. Create a database and configure settings file
+4. sudo apt-get install proj
 
-6. 
+5.sudo apt-add-repository ppa:sharpie/for-science  # To get GEOS 3.3.2 
+
+6. sudo apt-add-repository ppa:sharpie/postgis-nightly
+
+7. sudo apt-get update
+
+8. sudo apt-get install postgresql-9.1-postgis
+
+9. Run legacy_gist.sql.in file
+
+10. Run the requirement.txt file
+
+11. Create a database and configure settings file

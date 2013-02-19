@@ -9,8 +9,7 @@ from django.contrib.gis.geos import fromstr
 
 
 def home(request):
-	adForm = addressForm()
-	
+	adForm = addressForm()	
 	if request.method == 'POST':
 		if 'chance_of_ticket' in request.POST:
 				address = request.POST['address']
@@ -22,10 +21,10 @@ def home(request):
 				
 				ticket_frequency = getTicketFrequency(pnt)
 				return render_to_response('home.html',{'TF': ticket_frequency,'form': adForm}, context_instance=RequestContext(request))
+
 		elif 'tell_me_the_laws' in request.POST:
 				address = request.POST['address']
-				if address:
-					
+				if address:					
 					getlaws = getLaw(address)
 					if len(getlaws) == 0:
 						getlaws = 'No';
@@ -70,9 +69,9 @@ def getLaw(address):
 		longlat = longlat + longlat
 		cursor = connection.cursor()
 		sql = '''select violation, violation_description as description, fine_amt,split_part(location, ' ', 2)
-					   AS street,ROUND(MAX(ST_Distance_Sphere(geopoint,ST_SetSRID(ST_Point(%s, %s), 4269))))
-					   AS meters from tickets where ST_DWithin(geopoint, ST_SetSRID(ST_Point(%s, %s), 4269),
-					   0.0005) group by violation, violation_description, fine_amt, street'''
+					AS street,ROUND(MAX(ST_Distance_Sphere(geopoint,ST_SetSRID(ST_Point(%s, %s), 4269))))
+					AS meters from tickets where ST_DWithin(geopoint, ST_SetSRID(ST_Point(%s, %s), 4269),
+					0.0005) group by violation, violation_description, fine_amt, street'''
 		cursor.execute(sql,longlat)
 		result = dictfetchall(cursor)
 		return result

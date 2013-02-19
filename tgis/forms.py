@@ -7,7 +7,7 @@ CHOICES = (
 	(4, ('Wednesday')),
 	(5, ('Thursday')),
 	(6, ('Friday')),
-	(7, ('Saterday')),
+	(7, ('Saturday')),
 	
 )
 MYTIME = (
