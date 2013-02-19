@@ -7,6 +7,7 @@ from django.db.models import *
 from tgis.models import Paths, Tickets
 from django.contrib.gis.geos import fromstr
 
+
 def home(request):
 	adForm = addressForm()
 	
@@ -15,7 +16,7 @@ def home(request):
 				address = request.POST['address']
 				if address:
 						longlat = getPoint(address)
-						pnt = fromstr('POINT( %f %f)' % longlat,srid=4269)
+						pnt = fromstr('POINT(%f %f)' % longlat,srid=4269)
 				else:
 						pnt = fromstr('POINT(-122.398595809937 37.7840061485767)', srid=4269)
 				
@@ -36,6 +37,7 @@ def home(request):
 def getPoint(address):
 		from geocode.google import GoogleGeocoderClient
 		geocoder = GoogleGeocoderClient(False)
+		
 		result = geocoder.geocode(address)
 		if result.is_success():
 				longlat = result.get_location()
@@ -44,24 +46,19 @@ def getPoint(address):
 				return lat,lang
 
 
-def getTicketFrequency(location=None, start_time=None, end_time=None):
+def getTicketFrequency(location):
 	from time import mktime
 	from datetime import datetime
-	#pnt = fromstr('POINT(-122.398595809937 37.7840061485767)', srid=4269)
-	if not location:
-		P1 = Paths.objects.filter(path__dwithin=(pnt, 0.0001)).aggregate(end_datetime=Max('end_datetime'), start_datetime=Min('start_datetime'), cnt=Count('id'))
+	try:
+		P1 = Paths.objects.filter(path__dwithin=(location, 0.0001)).aggregate(end_datetime=Max('end_datetime'), start_datetime=Min('start_datetime'), cnt=Count('id'))
+		hours = (mktime(datetime.utctimetuple(P1['end_datetime'])) - mktime(datetime.utctimetuple(P1['start_datetime']))) / 366
+		tickets_per_hour = (P1['cnt'] / hours) * 100
+		P1['hours'] = hours
+		P1['tickets_per_hour'] = tickets_per_hour	
+		return P1
 
-	else:
-		pnt = location
-		P1 = Paths.objects.filter(path__dwithin=(pnt, 0.0001)).aggregate(end_datetime=Max('end_datetime'), start_datetime=Min('start_datetime'), cnt=Count('id'))
-	
-	hours = (mktime(datetime.utctimetuple(P1['end_datetime'])) - mktime(datetime.utctimetuple(P1['start_datetime']))) / 366
-	
-	tickets_per_hour = (P1['cnt'] / hours) * 100
-	P1['hours'] = hours
-	P1['tickets_per_hour'] = tickets_per_hour
-	
-	return P1
+	except TypeError:
+		return "No"
 
 
 def getLaw(address):
