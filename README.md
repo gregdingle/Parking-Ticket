@@ -18,6 +18,8 @@ To run the app follow the steps bellow:
 
 9. Run legacy_gist.sql.in file
 
-10. Run the requirement.txt file
+10. Create role 'gingle' with login
 
-11. Create a database and configure settings file
+11. Run the requirement.txt file
+
+12. Create a database and configure settings file
