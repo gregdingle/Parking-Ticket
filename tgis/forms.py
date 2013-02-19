@@ -23,9 +23,3 @@ class addressForm(forms.Form):
 	end_time = forms.ChoiceField(choices=MYTIME)
 	day_of_week = forms.ChoiceField(choices=CHOICES)
 	
-
-
-class signupForm(forms.Form):
-	username = forms.CharField(max_length=50)
-	password = forms.CharField(max_length=100)
-
