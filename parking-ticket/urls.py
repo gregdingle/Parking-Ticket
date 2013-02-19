@@ -7,8 +7,7 @@ from django.conf.urls import patterns, include, url
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'tgis.views.home', name='home'),
-    #url(r'^ticket/$', 'testgis.views.ticket', name='ticket'),
-    
+        
     url(r'^test/$', 'tgis.views.test', name='test'),
     url(r'^getlaw/$', 'tgis.views.getLaw', name='getLaw'),
 )

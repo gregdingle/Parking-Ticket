@@ -100,10 +100,10 @@ MIDDLEWARE_CLASSES = (
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'testgis.urls'
+ROOT_URLCONF = 'parking-ticket.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = 'testgis.wsgi.application'
+WSGI_APPLICATION = 'parking-ticket.wsgi.application'
 
 TEMPLATE_DIRS = (
     os.path.join(PROJECT_PATH, 'templates'),
