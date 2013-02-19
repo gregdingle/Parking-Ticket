@@ -15,19 +15,22 @@ def home(request):
 		if 'chance_of_ticket' in request.POST:
 				address = request.POST['address']
 				if address:
-						longlat = getPoint(address)
-						pnt = fromstr('POINT(%f %f)' % longlat,srid=4269)
+					longlat = getPoint(address)
+					pnt = fromstr('POINT(%f %f)' % longlat,srid=4269)
 				else:
-						pnt = fromstr('POINT(-122.398595809937 37.7840061485767)', srid=4269)
+					pnt = fromstr('POINT(-122.398595809937 37.7840061485767)', srid=4269)
 				
 				ticket_frequency = getTicketFrequency(pnt)
 				return render_to_response('home.html',{'TF': ticket_frequency,'form': adForm}, context_instance=RequestContext(request))
 		elif 'tell_me_the_laws' in request.POST:
 				address = request.POST['address']
 				if address:
-						getlaws = getLaw(address)
+					
+					getlaws = getLaw(address)
+					if len(getlaws) == 0:
+						getlaws = 'No';
 				else:
-						getlaws = getLaw('1045 PINE ST, San Francisco, CA')
+					getlaws = getLaw('1045 PINE ST, San Francisco, CA')
 				return render_to_response('home.html',{'form': adForm, 'PL': getlaws}, context_instance=RequestContext(request))
 
 	else:

@@ -30,7 +30,7 @@
 		  </div>
 		  <div class="span8">
 		  	{% if TF %}
-		  		{% if TF = 'No' %}
+		  		{% if TF == 'No' %}
 		  			<p>No Data found for your given address</p>
 		  		{% else %}
 			  		Start Date : <b>{{ TF.start_datetime }}</b><br>
@@ -40,21 +40,26 @@
 					Count : <b>{{ TF.cnt }}</b>
 				{% endif %}
 			{% elif PL %}
-				<table width=90%>
+				{% if PL  == 'No' %}
+		  			<p>No Data found for your given address</p>
+		  		{% else %}
+
+					<table width=90%>
+						<tr>
+							<th>violation</th><th>description</th>
+							<th>street</th><th>meters</th>
+							<th>fine_amt</th>
+						</tr>
+					{% for law in PL %}
 					<tr>
-						<th>violation</th><th>description</th>
-						<th>street</th><th>meters</th>
-						<th>fine_amt</th>
+						<td>{{ law.violation }}</td><td>{{ law.description }}</td>
+						<td>{{ law.street }}</td><td>{{ law.meters }}</td>
+						<td>{{ law.fine_amt }}</td>
 					</tr>
-				{% for law in PL %}
-				<tr>
-					<td>{{ law.violation }}</td><td>{{ law.description }}</td>
-					<td>{{ law.street }}</td><td>{{ law.meters }}</td>
-					<td>{{ law.fine_amt }}</td>
-				</tr>
-		  		
-		  		{% endfor %}
-		  		</table>
+			  		
+			  		{% endfor %}
+			  		</table>
+			  	{% endif %}
 			{% endif %}
 		  </div>
 		</div>
