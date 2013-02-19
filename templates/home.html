@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>This is my learning page</title>
+	<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+
+	<script type="text/javascript" src='/static/js/jquery.js' ></script>
+	<!---script type="text/javascript" src='/static/js/jquery.cycle.all.js' ></script---->
+	<script type="text/javascript" src='/static/js/bootstrap.js'></script>
+	
+</head>
+<body>
+	<div id='container'>
+		<div class="row">
+		  <div class="span12">
+		  	<h1>Parking Ticket Projects.</h1>
+		  </div>
+		  
+		</div>
+		<div class="row">
+		  <div class="span4">
+		  	<form action='/' method='post'>{% csrf_token %}
+				{{ form.as_p }}
+				<input type='submit' name='chance_of_ticket' value='CHANCE OF TICKET'>
+				<input type='submit' name='tell_me_the_laws' value='GET LAW'>
+			</form>
+			<hr>
+
+		  </div>
+		  <div class="span8">
+		  	{% if TF %}
+		  		Start Date : <b>{{ TF.start_datetime }}</b><br>
+				End Date : <b>{{ TF.end_datetime }}</b><br>
+				Hours : <b>{{ TF.hours }}</b><br>
+				Tickets per Hours : <b>{{ TF.tickets_per_hour }}</b><br>
+				Count : <b>{{ TF.cnt }}</b>
+			{% elif PL %}
+				<table width=90%>
+					<tr>
+						<th>violation</th><th>description</th>
+						<th>street</th><th>meters</th>
+						<th>fine_amt</th>
+					</tr>
+				{% for law in PL %}
+				<tr>
+					<td>{{ law.violation }}</td><td>{{ law.description }}</td>
+					<td>{{ law.street }}</td><td>{{ law.meters }}</td>
+					<td>{{ law.fine_amt }}</td>
+				</tr>
+		  		
+		  		{% endfor %}
+		  		</table>
+			{% endif %}
+		  </div>
+		</div>
+	</div>
+</body>
+</html>
