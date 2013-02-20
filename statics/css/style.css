@@ -5,8 +5,16 @@ body {
 #container {
 	margin: 10px 20px;
 }
-
-.span4, .span8 {
+.span12 {
+	color: #000;
+	margin-bottom: 10px;
+}
+.span12 p {
+	color: #FFF;
+	
+	font-size: 18px;
+}
+.span4, .span8, .span12 {
 	background-color: #0769AD;
 }
 table {
@@ -21,4 +29,8 @@ table {
 	font-size: 16px;
 	text-transform: uppercase;
 	border-bottom: 1px solid #FFF;
+}
+.vartext {
+	color: #F2A;
+	font-weight: bold;
 }

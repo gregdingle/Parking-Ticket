@@ -14,7 +14,11 @@
 		<div class="row">
 			<div class="span12">
 				<h1>Parking Ticket Projects.</h1>
-			</div>		  
+				<p>
+					Calculate the chance you will get a parking ticket at any address in San Francisco. Or just find out what the parking laws are at any address. Based on public records of actual tickets.
+				</p>
+			</div>
+
 		</div>
 		<div class="row">
 			<div class="span4">
@@ -36,6 +40,10 @@
 						Hours : <b>{{ TF.hours }}</b><br>
 						Tickets per Hours : <b>{{ TF.tickets_per_hour }}</b><br>
 						Count : <b>{{ TF.cnt }}</b>
+						<hr>
+						<p>
+							<span class=vartext>{{ TF.cnt }}</span> tickets were issued within 10 meters of <span class=vartext>{{ address }}</span> on Friday mornings between <span class=vartext>{{ TF.start_datetime }}</span> and <span class=vartext>{{ TF.end_datetime }}</span>. while that address was patrolled 678 times. Based on that information, there is a 33% chance you will get a ticket if you park illegally at the same address at the same time of day and same day of week.
+						</p>
 					{% endif %}
 
 				{% elif PL %}
@@ -43,7 +51,9 @@
 					{% if PL  == 'No' %}
 			  			<p>No Data found for your given address</p>
 			  		{% else %}
-
+			  			<p>
+			  				In 2012, the top reason for a parking citation within 10 meters of <span class=vartext>{{ address }}</span> on Friday mornings between 10am and 11am was<span class=vartext> {{ mvr }}</span>. The second most common reason was <span class=vartext>{{ smvr }}</span>.
+			  			</p>
 						<table width=90%>
 							<tr>
 								<th>violation</th><th>description</th>

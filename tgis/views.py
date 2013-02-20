@@ -20,17 +20,27 @@ def home(request):
 					pnt = fromstr('POINT(-122.398595809937 37.7840061485767)', srid=4269)
 				
 				ticket_frequency = getTicketFrequency(pnt)
-				return render_to_response('home.html',{'TF': ticket_frequency,'form': adForm}, context_instance=RequestContext(request))
+
+				return render_to_response('home.html',{'TF': ticket_frequency,'address':address,'form': adForm}, context_instance=RequestContext(request))
 
 		elif 'tell_me_the_laws' in request.POST:
 				address = request.POST['address']
 				if address:					
 					getlaws = getLaw(address)
+					
+					vcounter = []
+					for law in getlaws:
+						vcounter.append(law['description'])
+					from collections import Counter
+					vc = Counter(vcounter).most_common(2)
+					most_violated_role = vc[0][0]
+					sec_most_violated_role = vc[1][0]
 					if len(getlaws) == 0:
 						getlaws = 'No';
 				else:
 					getlaws = getLaw('1045 PINE ST, San Francisco, CA')
-				return render_to_response('home.html',{'form': adForm, 'PL': getlaws}, context_instance=RequestContext(request))
+				return render_to_response('home.html',{'form': adForm, 'PL': getlaws, 'mvr': most_violated_role,
+					'smvr':sec_most_violated_role, 'address': address}, context_instance=RequestContext(request))
 
 	else:
 		return render_to_response('home.html',{'form': adForm,}, context_instance=RequestContext(request))
@@ -53,7 +63,7 @@ def getTicketFrequency(location):
 	from datetime import datetime
 	try:
 		P1 = Paths.objects.filter(path__dwithin=(location, 0.0001)).aggregate(end_datetime=Max('end_datetime'), start_datetime=Min('start_datetime'), cnt=Count('id'))
-		hours = (mktime(datetime.utctimetuple(P1['end_datetime'])) - mktime(datetime.utctimetuple(P1['start_datetime']))) / 366
+		hours = (mktime(datetime.utctimetuple(P1['end_datetime'])) - mktime(datetime.utctimetuple(P1['start_datetime']))) / 3600
 		tickets_per_hour = (P1['cnt'] / hours) * 100
 		P1['hours'] = hours
 		P1['tickets_per_hour'] = tickets_per_hour	

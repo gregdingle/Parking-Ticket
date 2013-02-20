@@ -18,7 +18,7 @@ To run the app follow the steps bellow:
 
 9. Run legacy_gist.sql.in file
 
-10. Create role 'gingle' with login
+10. Create role 'gdingle' with login
 
 11. Run the requirement.txt file
 
