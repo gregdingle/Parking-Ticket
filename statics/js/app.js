@@ -9,15 +9,18 @@ app.homepage = function(){
 	var dname = today.getDay();
 	$("#id_day_of_week").val(dname);
 	//alert(dname);
-}
+};
 
 app.init = function(){
     //alert('App initialized...');
     this.homepage();
-}
+};
+
+app.ga_event = function(label, val){
+    _gaq.push(['_trackEvent', 'SF Parking Ticket', 'search', label, val]);
+};
+
 
 $(document).ready(function() {
     app.init();
-        
-
-})
+});
